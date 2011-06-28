@@ -46,6 +46,11 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.liquibase/liquibase-core/jars/liquibase-core-2.0.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/joda-time/joda-time-hibernate/jars/joda-time-hibernate-1.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/joda-time/joda-time/jars/joda-time-1.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.gpars/gpars/jars/gpars-0.12.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.jsr166-mirror/extra166y/jars/extra166y-1.7.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.jsr166-mirror/jsr166y/jars/jsr166y-1.7.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.13.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.activemq/activemq-all/jars/activemq-all-5.5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -13,8 +13,12 @@ hibernate {
 environments {
   development {
     dataSource {
+      pooled = true
+      driverClassName = "com.mysql.jdbc.Driver"
+      username = "esbmon"
+      password = "secret"
       dbCreate = "create-drop"
-      url = "jdbc:hsqldb:mem:devDB"
+      url = "jdbc:mysql://localhost/esbmon"
     }
   }
   test {

@@ -6,6 +6,7 @@ class Node {
   }
 
   String name
+  String nodeCode
 
   String toString() { name }
 }

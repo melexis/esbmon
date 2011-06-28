@@ -6,6 +6,10 @@ class SampleTime {
 
   DateTime sampleTime
 
+  boolean complete = false;
+
   static constraints = {
   }
+
+  String toString() { sampleTime.toString() }
 }

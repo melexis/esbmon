@@ -11,8 +11,11 @@ class Broker {
         node(unique: ['site', 'environment'])
     }
 
+    String getHostName() {"${node.name}${environment.suffix}.${site.domainName}"}
+    def setHostName(String s){}; \
+
     String getJmxUri() {
-        "service:jmx:rmi:///jndi/rmi://${node.name}${environment.suffix}.${site.domainName}:1099/karaf-root"
+        "service:jmx:rmi:///jndi/rmi://${hostName}:1099/karaf-root"
     }
 
     def setJmxUri(String) {}

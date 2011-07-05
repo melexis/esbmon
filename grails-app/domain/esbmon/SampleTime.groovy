@@ -6,7 +6,9 @@ class SampleTime {
 
   DateTime sampleTime
 
-  boolean complete = false;
+  boolean operatingComplete = false;
+
+  boolean networkComplete = false;
 
   static constraints = {
   }

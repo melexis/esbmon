@@ -17,7 +17,7 @@ class BrokerInfoController {
         def trendInfoCpu = [:]
         def cpuAverage = [:]
 
-        def sampleTime = SampleTime.findByComplete(true, [sort: 'sampleTime', order: 'desc'])
+        def sampleTime = SampleTime.findByOperatingComplete(true, [sort: 'sampleTime', order: 'desc'])
         brokers.each {
             brokerInfo[it] = OperatingInfo.findByBrokerAndSampleTime(it, sampleTime)
             getTrendInformation(it, trendInfoHeap, trendInfoNonHeap, trendInfoLoad, trendInfoCpu, cpuAverage)

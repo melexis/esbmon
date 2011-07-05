@@ -13,6 +13,8 @@ import org.apache.activemq.broker.jmx.NetworkConnectorViewMBean
 import org.apache.activemq.broker.jmx.NetworkConnectorView
 import org.apache.activemq.network.NetworkBridge
 import org.apache.activemq.broker.jmx.NetworkBridgeView
+import javax.management.ObjectInstance
+import org.codehaus.groovy.ant.Groovy
 
 class JmxService {
 
@@ -106,26 +108,27 @@ class JmxService {
     }
 
 
+    List<NetworkInfo> getNetworkConnectionInfo(Broker broker, MBeanServerConnection connection, SampleTime sampleTime) {
 
-    NetworkInfo[] getNetworkConnectionInfo(Broker broker, MBeanServerConnection connection, SampleTime sampleTime) {
-
-        NetworkInfo[] nwInfoList = []
+        def nwInfoList = []
 
         try {
 
-            def root = new ObjectName("${broker.baseJmxName},Type=NetworkConnections")
-            def connectors = (Set<NetworkConnectorView>)connection.queryMBeans(root, null)
+            def root = new ObjectName("${broker.baseJmxName},Type=NetworkConnector,*")
+            def connectors = connection.queryNames(root, null).collect {new GroovyMBean(connection, it)}
 
             connectors.each {
                 NetworkInfo nwInfo = getNetworkConnectorInfo(it, sampleTime)
+                nwInfo.broker =  broker
 
-
-                def name = "${broker.baseJmxName},NetworkConnectorName=${nwInfo.name},Type=NetworkBridge"
-                def bridges = (Set<NetworkBridgeView>)connection.queryMBeans(name,null)
+                String name = "${broker.baseJmxName},NetworkConnectorName=${nwInfo.name},Type=NetworkBridge,*"
+                def query = new ObjectName(name)
+                def bridges = connection.queryNames(query,null).collect {new GroovyMBean(connection, it)}
                 bridges.each {
-                    nwInfo.addToBridges(getNetworkBridgeInfo(it))
+                    def bridge = getNetworkBridgeInfo(it)
+                    nwInfo.addToBridges(bridge)
                 }
-                nwInfo.save();
+                nwInfo.save(failOnError:true);
 
                 nwInfoList << nwInfo
             }
@@ -138,37 +141,35 @@ class JmxService {
 
     }
 
-    private def getNetworkConnectorInfo(NetworkConnectorView nwcProxy, SampleTime sampleTime) {
+    private def getNetworkConnectorInfo(nwcProxy, SampleTime sampleTime) {
 
         def nwInfo = new NetworkInfo()
 
         nwInfo.sampleTime = sampleTime
-        nwInfo.name = nwcProxy.name
-        nwInfo.bridgeTempDestination = nwcProxy.bridgeTempDestinations
-        nwInfo.conduitSubscriptions = nwcProxy.conduitSubscriptions
-        nwInfo.decreaseNetworkConsumerPriority = nwcProxy.decreaseNetworkConsumerPriority
-        nwInfo.dispatchAsync = nwcProxy.dispatchAsync
-        nwInfo.duplex = nwcProxy.duplex
-        nwInfo.dynamicOnly = nwcProxy.dynamicOnly
-        nwInfo.networkTtl = nwcProxy.networkTTL
-        nwInfo.prefetchSize = nwcProxy.prefetchSize
+        nwInfo.name = nwcProxy.Name
+        nwInfo.bridgeTempDestination = nwcProxy.BridgeTempDestinations
+        nwInfo.conduitSubscriptions = nwcProxy.ConduitSubscriptions
+        nwInfo.decreaseNetworkConsumerPriority = nwcProxy.DecreaseNetworkConsumerPriority
+        nwInfo.dispatchAsync = nwcProxy.DispatchAsync
+        nwInfo.duplex = nwcProxy.Duplex
+        nwInfo.dynamicOnly = nwcProxy.DynamicOnly
+        nwInfo.networkTtl = nwcProxy.NetworkTTL
+        nwInfo.prefetchSize = nwcProxy.PrefetchSize
 
         nwInfo.save()
 
         return nwInfo
     }
 
-    BridgeInfo getNetworkBridgeInfo(NetworkBridgeView nwbProxy) {
+    BridgeInfo getNetworkBridgeInfo(nwbProxy) {
 
         BridgeInfo bridgeInfo = new BridgeInfo()
 
-        bridgeInfo.createdByDuplex = nwbProxy.createdByDuplex
-        bridgeInfo.dequeueCounter = nwbProxy.dequeueCounter
-        bridgeInfo.enqueueCounter = nwbProxy.enqueueCounter
-        bridgeInfo.remoteAddress = nwbProxy.remoteAddress
-        bridgeInfo.remoteBrokerName = nwbProxy.remoteBrokerName
-
-        bridgeInfo.save()
+        bridgeInfo.createdByDuplex = nwbProxy.CreatedByDuplex
+        bridgeInfo.dequeueCounter = nwbProxy.DequeueCounter
+        bridgeInfo.enqueueCounter = nwbProxy.EnqueueCounter
+        bridgeInfo.remoteAddress = nwbProxy.RemoteAddress
+        bridgeInfo.remoteBrokerName = nwbProxy.RemoteBrokerName
 
         return bridgeInfo;
 

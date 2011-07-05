@@ -4668,7 +4668,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   }
 
   function checkReadyState() {
-    if (document.readyState === 'complete') {
+    if (document.readyState === 'operatingComplete') {
       document.stopObserving('readystatechange', checkReadyState);
       fireContentLoadedEvent();
     }

@@ -2,7 +2,7 @@ package esbmon
 
 import grails.test.*
 
-class UpdateStatisticsJobTests extends GrailsUnitTestCase {
+class OperatingInfoTests extends GrailsUnitTestCase {
   protected void setUp() {
     super.setUp()
   }

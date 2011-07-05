@@ -1,9 +1,9 @@
-<%@ page import="esbmon.Broker" %>
+<%@ page import="esbmon.BridgeInfo; org.apache.activemq.command.BrokerInfo; esbmon.NetworkInfo; esbmon.Broker" %>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="layout" content="main"/>
-  <meta http-equiv="refresh" content="10">
+  <meta http-equiv="refresh" content="60">
   <g:set var="entityName"
          value="${message(code: 'broker.label', default: 'Broker')}"/>
   <title><g:message code="default.list.label" args="[entityName]"/></title>
@@ -28,90 +28,55 @@
     <table>
       <thead>
       <tr>
-
-        <g:sortableColumn property="id"
-                          title="${message(code: 'broker.id.label', default: 'Id')}"/>
-
-        <th><g:message code="broker.node.label" default="Node"/></th>
-
-        <th><g:message code="broker.environment.label"
-                       default="Environment"/></th>
-
-        <th><g:message code="broker.site.label" default="Site"/></th>
-
-        <th><g:message code="broker.info.heapMemory" default="Site"/></th>
-
-        <th><g:message code="broker.info.nonHeapMemory" default="Site"/></th>
-
-        <th><g:message code="broker.info.load" default="Site"/></th>
-
-        <th><g:message code="broker.info.cpu" default="Site"/></th>
-
+        <th>...</th>
+        <g:each in="${brokerNames}" status="i" var="brokerName">
+            <th>${brokerName}</th>
+        </g:each>
       </tr>
       </thead>
       <tbody>
-      <g:each in="${brokerInstanceList}" status="i" var="brokerInstance">
-        <g:set var="info" value="${brokerInfo[brokerInstance]}"/>
+      <g:each in="${connectorNames}" status="i" var="connector">
         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 
-          <td><g:link action="show"
-                      id="${brokerInstance.id}">${fieldValue(bean: brokerInstance, field: "id")}</g:link></td>
+          <th>${connector}</th>
 
-          <td>${fieldValue(bean: brokerInstance, field: "node")}</td>
-
-          <td>${fieldValue(bean: brokerInstance, field: "environment")}</td>
-
-          <td>${fieldValue(bean: brokerInstance, field: "site")}</td>
-
-          <td>
-            <g:if test="${info!=null}">
-              <sparklines:line id="heap-trend-${info.id}"
-                               values="${trendInfoHeap[brokerInstance]}"/>
-              <sparklines:pie id="heap-${info.id}"
-                              values="${[info.usedHeap, info.maxHeap - info.usedHeap]}"/>
-                ${Math.round(info.usedHeap/1000000)}Mb/${Math.round(info.maxHeap/1000000)}Mb
-            </g:if>
-            <g:else>no data available</g:else>
-          </td>
-
-          <td>
-            <g:if test="${info!=null}">
-              <sparklines:line id="non-heap-trend-${info.id}"
-                               values="${trendInfoNonHeap[brokerInstance]}"/>
-              <sparklines:pie id="non-heap-${info.id}"
-                              values="${[info.usedNonHeap, info.maxNonHeap - info.usedNonHeap]}"/>
-              ${Math.round(info.usedNonHeap/1000000)}Mb/${Math.round(info.maxNonHeap/1000000)}Mb
-            </g:if>
-            <g:else>no data available</g:else>
-          </td>
-
-          <td>
-            <g:if test="${info!=null}">
-              <sparklines:line id="load-trend-${info.id}"
-                               values="${trendInfoLoad[brokerInstance]}"/>
-               ${info.loadAverage}
-            </g:if>
-            <g:else>no data available</g:else>
-          </td>
-
-          <td>
-            <g:if test="${info!=null}">
-              <sparklines:line id="cpu-trend-${info.id}"
-                               values="${trendInfoCpu[brokerInstance]}"/>
-               ${cpuAverage[brokerInstance]}
-            </g:if>
-            <g:else>no data available</g:else>
-          </td>
-
+            <g:each in="${brokerNames}" status="j" var="broker">
+                <%
+                    def key = "${broker}:${connector}"
+                    def networkInfo = bridges[key]
+                    def remotes = networkInfo?.bridges
+                %>
+                <g:if test="${networkInfo != null}">
+                    <g:if test="${remotes != 0}">
+                        <td>
+                            <g:each in="${remotes}" status="k" var="remote">
+                                <table>
+                                    <tr>
+                                        <td><sparklines:line id="n${i}c${j}b${k}e" values="${trends[key][0]}"/></td>
+                                        <td>${remote.dequeueCounter}</td>
+                                    </tr>
+                                    <tr>
+                                      <td><sparklines:line id="n${i}c${j}b${k}d" values="${trends[key][1]}"/></td>
+                                      <td>${remote.enqueueCounter}</td>
+                                    </tr>
+                                </table>
+                            </g:each>
+                        </td>
+                    </g:if>
+                    <g:else>
+                        <td>no bridge</td>
+                    </g:else>
+                </g:if>
+                <g:else>
+                    <td>&nbsp;</td>
+                </g:else>
+            </g:each>
         </tr>
       </g:each>
       </tbody>
     </table>
   </div>
 
-  <div class="paginateButtons">
-    <g:paginate total="${brokerInstanceTotal}"/>
-  </div>
 </div>
 </body>
 </html>

@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.joda.time.DateTime
-import static groovyx.gpars.GParsPool.withPool
+import static groovyx.gpars.GParsExecutorsPool.withPool
 import static groovyx.gpars.GParsPoolUtil.callAsync
 import static java.lang.StrictMath.max
 
@@ -35,7 +35,7 @@ class UpdateNetworkInfoJob {
 
         Closure updateWorker = { broker ->
             log.info("   start getting network info for ${broker}")
-            networkInfoService.getNetworkInfo(broker, sampleTime)
+//            networkInfoService.getNetworkInfo(broker, sampleTime)
             log.info("   done getting network info for ${broker}")
 
         }
@@ -43,7 +43,7 @@ class UpdateNetworkInfoJob {
         List<Future> futures = []
         withPool(8, {
             Broker.findAll().each { broker ->
-                futures << callAsync(updateWorker, broker)
+                futures << updateWorker.callAsync(broker)
             }
 
             futures.each { f ->

@@ -61,6 +61,9 @@ environments {
     test {
         grails.serverURL = "http://localhost:8080/${appName}"
     }
+    standalone {
+        grails.serverURL = "http://esbmonitor-test.colo.elex.be:8080/${appName}"
+    }
 
 }
 

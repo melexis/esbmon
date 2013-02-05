@@ -28,6 +28,12 @@ environments {
       url = "jdbc:hsqldb:mem:testDb"
     }
   }
+  standalone {
+    dataSource {
+      dbCreate = "update"
+      url = "jdbc:hsqldb:file:esbmonDb;shutdown=true"
+    }
+  }
   production {
     dataSource {
       dbCreate = "update"

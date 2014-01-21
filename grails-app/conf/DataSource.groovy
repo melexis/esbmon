@@ -1,43 +1,33 @@
 dataSource {
-  pooled = true
-  driverClassName = "org.hsqldb.jdbcDriver"
-  username = "sa"
-  password = ""
+    pooled = true
+    driverClassName = "com.mysql.jdbc.Driver"
+    username = "root"
+    password = ""
 }
 hibernate {
-  cache.use_second_level_cache = true
-  cache.use_query_cache = true
-  cache.provider_class = 'net.sf.ehcache.hibernate.EhCacheProvider'
+    cache.use_second_level_cache = true
+    cache.use_query_cache = true
+    cache.provider_class = "net.sf.ehcache.hibernate.EhCacheProvider"
 }
+
 // environment specific settings
 environments {
-  development {
-    dataSource {
-      dbCreate = "create"
-      pooled = true
-      maxActive = 32
-      driverClassName = "com.mysql.jdbc.Driver"
-      username = "esbmon"
-      password = "secret"
-      url = "jdbc:mysql://localhost/esbmon"
-    }
-  }
-  test {
-    dataSource {
-      dbCreate = "update"
-      url = "jdbc:hsqldb:mem:testDb"
-    }
-  }
-  standalone {
-    dataSource {
-      dbCreate = "update"
-      url = "jdbc:hsqldb:file:esbmonDb;shutdown=true"
-    }
-  }
-  production {
-    dataSource {
-      dbCreate = "update"
-      url = "jdbc:hsqldb:file:prodDb;shutdown=true"
-    }
-  }
+    development {
+		    dataSource {
+			      dbCreate = "update" // one of 'create', 'create-drop','update'
+			      url = "jdbc:mysql://localhost:3306/esbmon_development"
+		    }
+	  }
+	  test {
+		    dataSource {
+			      dbCreate = "update"
+			      url = "jdbc:mysql://localhost:3306/esbmon_test"
+		    }
+	  }
+	  production {
+		    dataSource {
+			      dbCreate = "update"
+			      url = "jdbc:mysql://localhost:3306/esbmon_production"
+		    }
+	  }
 }

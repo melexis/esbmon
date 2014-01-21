@@ -20,9 +20,11 @@ class BrokerService {
               eq('node', node)
             }
           }
+          println(environment)
 
           if (brokers.empty) {
-            new Broker(environment: environment, site: site, node: node).save()
+            def b = new Broker(environment: environment, site: site, node: node)
+            b.save()
           }
         }
       }

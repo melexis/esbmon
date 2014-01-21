@@ -31,6 +31,8 @@ grails.project.dependency.resolution = {
         runtime 'mysql:mysql-connector-java:5.1.13'
 
         compile "org.apache.activemq:activemq-all:5.5.0"
+        compile 'joda-time:joda-time-hibernate:1.3'
+        compile 'org.jadira.usertype:usertype.jodatime:1.9'
 
     }
 }

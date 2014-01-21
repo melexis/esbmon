@@ -2,10 +2,11 @@ package esbmon
 
 class Broker {
 
-    def Environment environment
-    def Site site
-    def Node node
-    static belongsTo = [Environment, Site, Node]
+//    Environment environment
+//    Site site
+//    Node node
+
+    static belongsTo = [environment:Environment, site:Site, node:Node]
 
     static constraints = {
         node(unique: ['site', 'environment'])

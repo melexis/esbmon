@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'environment.label', default: 'Environment')}" />
+        <g:set var="entityName" value="${message(code: 'stage.label', default: 'Environment')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -18,9 +18,9 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${environmentInstance}">
+            <g:hasErrors bean="${stageInstance}">
             <div class="errors">
-                <g:renderErrors bean="${environmentInstance}" as="list" />
+                <g:renderErrors bean="${stageInstance}" as="list" />
             </div>
             </g:hasErrors>
             <g:form action="save" >
@@ -30,19 +30,19 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="name"><g:message code="environment.name.label" default="Name" /></label>
+                                    <label for="name"><g:message code="stage.name.label" default="Name" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: environmentInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" value="${environmentInstance?.name}" />
+                                <td valign="top" class="value ${hasErrors(bean: stageInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" value="${stageInstance?.name}" />
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="suffix"><g:message code="environment.suffix.label" default="Suffix" /></label>
+                                    <label for="suffix"><g:message code="stage.suffix.label" default="Suffix" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: environmentInstance, field: 'suffix', 'errors')}">
-                                    <g:textField name="suffix" value="${environmentInstance?.suffix}" />
+                                <td valign="top" class="value ${hasErrors(bean: stageInstance, field: 'suffix', 'errors')}">
+                                    <g:textField name="suffix" value="${stageInstance?.suffix}" />
                                 </td>
                             </tr>
                         

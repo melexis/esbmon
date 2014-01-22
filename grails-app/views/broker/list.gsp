@@ -34,7 +34,7 @@
 
         <th><g:message code="broker.node.label" default="Node"/></th>
 
-        <th><g:message code="broker.environment.label"
+        <th><g:message code="broker.stage.label"
                        default="Environment"/></th>
 
         <th><g:message code="broker.site.label" default="Site"/></th>
@@ -50,7 +50,7 @@
 
           <td>${fieldValue(bean: brokerInstance, field: "node")}</td>
 
-          <td>${fieldValue(bean: brokerInstance, field: "environment")}</td>
+          <td>${fieldValue(bean: brokerInstance, field: "stage")}</td>
 
           <td>${fieldValue(bean: brokerInstance, field: "site")}</td>
 

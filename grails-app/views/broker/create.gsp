@@ -46,14 +46,14 @@
 
         <tr class="prop">
           <td valign="top" class="name">
-            <label for="environment"><g:message code="broker.environment.label"
-                                                default="Environment"/></label>
+            <label for="stage"><g:message code="broker.stage.label"
+                                                default="Stage"/></label>
           </td>
           <td valign="top"
-              class="value ${hasErrors(bean: brokerInstance, field: 'environment', 'errors')}">
-            <g:select name="environment.id" from="${esbmon.Environment.list()}"
+              class="value ${hasErrors(bean: brokerInstance, field: 'stage', 'errors')}">
+            <g:select name="stage.id" from="${esbmon.Environment.list()}"
                       optionKey="id"
-                      value="${brokerInstance?.environment?.id}"/>
+                      value="${brokerInstance?.stage?.id}"/>
           </td>
         </tr>
 

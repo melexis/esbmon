@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'environment.label', default: 'Environment')}" />
+        <g:set var="entityName" value="${message(code: 'stage.label', default: 'Environment')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -22,23 +22,23 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'environment.id.label', default: 'Id')}" />
+                            <g:sortableColumn property="id" title="${message(code: 'stage.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="name" title="${message(code: 'environment.name.label', default: 'Name')}" />
+                            <g:sortableColumn property="name" title="${message(code: 'stage.name.label', default: 'Name')}" />
                         
-                            <g:sortableColumn property="suffix" title="${message(code: 'environment.suffix.label', default: 'Suffix')}" />
+                            <g:sortableColumn property="suffix" title="${message(code: 'stage.suffix.label', default: 'Suffix')}" />
                         
                         </tr>
                     </thead>
                     <tbody>
-                    <g:each in="${environmentInstanceList}" status="i" var="environmentInstance">
+                    <g:each in="${stageInstanceList}" status="i" var="stageInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${environmentInstance.id}">${fieldValue(bean: environmentInstance, field: "id")}</g:link></td>
+                            <td><g:link action="show" id="${stageInstance.id}">${fieldValue(bean: stageInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: environmentInstance, field: "name")}</td>
+                            <td>${fieldValue(bean: stageInstance, field: "name")}</td>
                         
-                            <td>${fieldValue(bean: environmentInstance, field: "suffix")}</td>
+                            <td>${fieldValue(bean: stageInstance, field: "suffix")}</td>
                         
                         </tr>
                     </g:each>
@@ -46,7 +46,7 @@
                 </table>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${environmentInstanceTotal}" />
+                <g:paginate total="${stageInstanceTotal}" />
             </div>
         </div>
     </body>

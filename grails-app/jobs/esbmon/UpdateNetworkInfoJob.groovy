@@ -35,7 +35,7 @@ class UpdateNetworkInfoJob {
 
         Closure updateWorker = { broker ->
             log.info("   start getting network info for ${broker}")
-//            networkInfoService.getNetworkInfo(broker, sampleTime)
+            networkInfoService.getNetworkInfo(broker, sampleTime)
             log.info("   done getting network info for ${broker}")
 
         }

@@ -32,7 +32,7 @@ class NetworkInfoController {
             brokerNames << broker.name
             log.info("getting bridges for ${broker.name}")
             List <NetworkInfo> connectors = NetworkInfo.findAllByBrokerAndSampleTime(broker, sampleTime)
-            println("${new DateTime()} : Got connectors for ${broker}")
+            println("${new DateTime()} : Got ${connectors.size()} connectors for ${broker.name}")
             connectors.each {connector ->
                 log.info("  got bridge ${connector.name} for ${broker.name}")
                 println("${new DateTime()} : got bridge ${connector.name} for ${broker.name}")

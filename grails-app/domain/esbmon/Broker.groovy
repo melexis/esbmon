@@ -28,7 +28,7 @@ class Broker {
     def setName(String) {}
 
     String getBaseJmxName() {
-        "org.apache.activemq:BrokerName=broker${node.nodeCode}"
+        "org.apache.activemq:BrokerName=global"
     }
 
     def setBaseJmxName(String s) {}

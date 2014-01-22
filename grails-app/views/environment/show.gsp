@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'stage.label', default: 'Environment')}" />
+        <g:set var="entityName" value="${message(code: 'environment.label', default: 'Environment')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -23,23 +23,23 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="stage.id.label" default="Id" /></td>
+                            <td valign="top" class="name"><g:message code="environment.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: stageInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="stage.name.label" default="Name" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: stageInstance, field: "name")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: environmentInstance, field: "id")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="stage.suffix.label" default="Suffix" /></td>
+                            <td valign="top" class="name"><g:message code="environment.name.label" default="Name" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: stageInstance, field: "suffix")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: environmentInstance, field: "name")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="environment.suffix.label" default="Suffix" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: environmentInstance, field: "suffix")}</td>
                             
                         </tr>
                     
@@ -48,7 +48,7 @@
             </div>
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${stageInstance?.id}" />
+                    <g:hiddenField name="id" value="${environmentInstance?.id}" />
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </g:form>

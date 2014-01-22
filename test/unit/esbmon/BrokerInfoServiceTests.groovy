@@ -1,6 +1,8 @@
 package esbmon
 
 import grails.test.GrailsUnitTestCase
+
+import javax.management.ObjectName
 import java.lang.management.MemoryMXBean
 import java.lang.management.MemoryUsage
 import javax.management.MBeanServerConnection
@@ -31,7 +33,7 @@ class BrokerInfoServiceTests extends GrailsUnitTestCase {
 
     jmxControl.demand.withConnection {Broker b, Closure f ->
       def connection =  connControl.createMock()
-      f.call(connection)
+      f.call(b,connection)
     }
     jmxControl.demand.getMemoryInfo {c, OperatingInfo o ->
       o.usedHeap = 10000000
@@ -102,7 +104,17 @@ class BrokerInfoServiceTests extends GrailsUnitTestCase {
 
       long getTotalPhysicalMemorySize() { return 20000000 }
 
-      String getName() { return "MyName" }
+        @Override
+        double getSystemCpuLoad() {
+            return 0.123
+        }
+
+        @Override
+        double getProcessCpuLoad() {
+            return 0.246
+        }
+
+        String getName() { return "MyName" }
 
       String getArch() { return "MyArch" }
 
@@ -112,6 +124,10 @@ class BrokerInfoServiceTests extends GrailsUnitTestCase {
 
       double getSystemLoadAverage() { return 3.1415 }
 
+        @Override
+        ObjectName getObjectName() {
+            return "myObjectName"
+        }
     }
   }
 
@@ -143,6 +159,10 @@ class BrokerInfoServiceTests extends GrailsUnitTestCase {
 
       void gc() { }
 
+        @Override
+        ObjectName getObjectName() {
+            return "myObjectName"
+        }
     }
   }
 

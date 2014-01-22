@@ -47,12 +47,12 @@
       </tr>
 
       <tr class="prop">
-        <td valign="top" class="name"><g:message code="broker.environment.label"
+        <td valign="top" class="name"><g:message code="broker.stage.label"
                                                  default="Environment"/></td>
 
-        <td valign="top" class="value"><g:link controller="environment"
+        <td valign="top" class="value"><g:link controller="stage"
                                                action="show"
-                                               id="${brokerInstance?.environment?.id}">${brokerInstance?.environment?.encodeAsHTML()}</g:link></td>
+                                               id="${brokerInstance?.stage?.id}">${brokerInstance?.stage?.encodeAsHTML()}</g:link></td>
 
       </tr>
 

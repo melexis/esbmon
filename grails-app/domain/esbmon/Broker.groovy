@@ -2,17 +2,17 @@ package esbmon
 
 class Broker {
 
-//    Environment environment
-//    Site site
-//    Node node
-
-    static belongsTo = [environment:Environment, site:Site, node:Node]
+    static belongsTo = [ 
+        stage: esbmon.Environment,
+        site:Site, 
+        node:Node
+    ]
 
     static constraints = {
-        node(unique: ['site', 'environment'])
+        node(unique: ['site', 'stage'])
     }
 
-    String getHostName() {"${node.name}${environment.suffix}.${site.domainName}"}
+    String getHostName() {"${node.name}${stage.suffix}.${site.domainName}"}
     def setHostName(String s){}; \
 
     String getJmxUri() {

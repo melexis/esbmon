@@ -3,3 +3,4 @@ esbmon-grailsPlugins.iml esbmon.iml
 target
 out
 esbmon-grailsPlugins.iml
+*.iml

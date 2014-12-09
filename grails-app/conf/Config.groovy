@@ -99,19 +99,19 @@ grails.plugin.databasemigration.changelogFileName = "newChangelog.groovy"
 
 // Added by the Joda-Time plugin:
 grails.gorm.default.mapping = {
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentDateTime, class: org.joda.time.DateTime
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentDuration, class: org.joda.time.Duration
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentInstant, class: org.joda.time.Instant
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentInterval, class: org.joda.time.Interval
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentLocalDate, class: org.joda.time.LocalDate
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentLocalTimeAsString, class: org.joda.time.LocalTime
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentLocalDateTime, class: org.joda.time.LocalDateTime
-	"user-type" type: org.joda.time.contrib.hibernate.PersistentPeriod, class: org.joda.time.Period
+ 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDateTime, class: org.joda.time.DateTime
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDuration, class: org.joda.time.Duration
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentInstant, class: org.joda.time.Instant
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentInterval, class: org.joda.time.Interval
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentLocalDate, class: org.joda.time.LocalDate
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentLocalTimeAsString, class: org.joda.time.LocalTime
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime, class: org.joda.time.LocalDateTime
+// 	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentPeriod, class: org.joda.time.Period
 }
 
 // Uncomment and edit the following lines to start using Grails encoding & escaping improvements
 
-/* remove this line 
+/* remove this line
 // GSP settings
 grails {
     views {

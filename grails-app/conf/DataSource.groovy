@@ -13,7 +13,7 @@ hibernate {
 // environment specific settings
 environments {
     development {
-		    dataSource {
+	    dataSource {
 			      dbCreate = "create-drop" // one of 'create', 'create-drop','update'
 			      url = "jdbc:mysql://localhost:3306/esbmon_development"
 		    }

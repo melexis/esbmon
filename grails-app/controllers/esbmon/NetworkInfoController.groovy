@@ -35,8 +35,6 @@ class NetworkInfoController {
             println("${new DateTime()} : Got ${connectors.size()} connectors for ${broker.name}")
             connectors.each {connector ->
                 log.info("  got bridge ${connector.name} for ${broker.name}")
-                println("${new DateTime()} : got bridge ${connector.name} for ${broker.name}")
-                log.info("  got bridge ${connector.name} for ${broker.name}")
                 connectorNames << connector.name
                 def key = "${broker.name}:${connector.name}"
                 bridges[key] = connector
@@ -81,4 +79,3 @@ class NetworkInfoController {
     }
 
 }
-

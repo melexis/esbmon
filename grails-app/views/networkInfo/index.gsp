@@ -46,10 +46,13 @@
                     def networkInfo = bridges[key]
                     def remotes = networkInfo?.bridges
                 %>
+                <!-- ${networkInfo} -->
+                <!-- ${remotes} -->
                 <g:if test="${networkInfo != null}">
-                    <g:if test="${remotes != 0}">
+                    <g:if test="${remotes.size() != 0}">
                         <td>
                             <g:each in="${remotes}" status="k" var="remote">
+                                <!-- ${trends[key]} -->
                                 <table>
                                     <tr>
                                         <td><sparklines:line id="n${i}c${j}b${k}e" values="${trends[key][0]}"/></td>
@@ -68,7 +71,7 @@
                     </g:else>
                 </g:if>
                 <g:else>
-                    <td>&nbsp;</td>
+                    <td>no connector</td>
                 </g:else>
             </g:each>
         </tr>

@@ -79,5 +79,10 @@ grails.project.dependency.resolution = {
         //compile ":coffee-asset-pipeline:1.8.0"
         //compile ":handlebars-asset-pipeline:1.3.0.3"
 
+        // enable scheduled jobs
+        compile ":quartz:1.0.2"
+
+        // sparklines support
+        compile ":sparklines:0.1"
     }
 }

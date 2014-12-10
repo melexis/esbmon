@@ -15,22 +15,27 @@ import org.apache.activemq.network.NetworkBridge
 import org.apache.activemq.broker.jmx.NetworkBridgeView
 import javax.management.ObjectInstance
 import org.codehaus.groovy.ant.Groovy
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 
 class JmxService {
+
+    private static final Log log = LogFactory.getLog(this);
 
     static transactional = true
 
     def withConnection(Broker broker, Closure closure) {
         def context = [
-                (JMXConnector.CREDENTIALS): (String[]) ["smx", "smx"].toArray()
+                          (JMXConnector.CREDENTIALS): (String[]) ["admin", "activemq"].toArray()
         ]
 
         JMXConnector jmxc = null
         MBeanServerConnection connection = null
 
         try {
+            log.info("Connecting to jmxUri: ${broker.jmxUri}")
             def jmxUri = new JMXServiceURL(broker.jmxUri)
-            jmxc = JMXConnectorFactory.connect(jmxUri, context)
+            jmxc = JMXConnectorFactory.connect(jmxUri,context)
             connection = jmxc.MBeanServerConnection
             closure.call(broker, connection)
         } catch (Exception e) {
@@ -114,23 +119,33 @@ class JmxService {
 
         try {
 
-            def root = new ObjectName("${broker.baseJmxName},Type=NetworkConnector,*")
+            def objectName = "${broker.baseJmxName},type=Broker,connector=networkConnectors,networkConnectorName=*"
+            def root = new ObjectName(objectName)
+            log.info("Querying for ${objectName}")
             def connectors = connection.queryNames(root, null).collect {new GroovyMBean(connection, it)}
+            log.info("got ${connectors.size} connectors for ${objectName}")
 
             connectors.each {
+              //log.info("Getting info for ${it}, ${it.info().getClassName()}, ${it.info().getDescription()}}")
+              if (it.info().getClassName().equals("org.apache.activemq.broker.jmx.NetworkConnectorView")) {
                 NetworkInfo nwInfo = getNetworkConnectorInfo(it, sampleTime)
                 nwInfo.broker =  broker
 
-                String name = "${broker.baseJmxName},NetworkConnectorName=${nwInfo.name},Type=NetworkBridge,*"
+                String name = "${broker.baseJmxName},type=Broker,connector=networkConnectors,networkConnectorName=${nwInfo.name},networkBridge=*"
+                log.info("Finding bridges with ${name}")
                 def query = new ObjectName(name)
                 def bridges = connection.queryNames(query,null).collect {new GroovyMBean(connection, it)}
+                //log.info("Bridges : ${bridges}")
                 bridges.each {
-                    def bridge = getNetworkBridgeInfo(it)
-                    nwInfo.addToBridges(bridge)
+                  if (it.info().getClassName().equals("org.apache.activemq.broker.jmx.NetworkBridgeView")) {
+                        def bridge = getNetworkBridgeInfo(it)
+                        nwInfo.addToBridges(bridge)
+                      }
                 }
                 nwInfo.save(failOnError:true);
 
                 nwInfoList << nwInfo
+              }
             }
 
         } catch (Exception e) {
@@ -153,7 +168,7 @@ class JmxService {
         nwInfo.dispatchAsync = nwcProxy.DispatchAsync
         nwInfo.duplex = nwcProxy.Duplex
         nwInfo.dynamicOnly = nwcProxy.DynamicOnly
-        nwInfo.networkTtl = nwcProxy.NetworkTTL
+        nwInfo.networkTtl = nwcProxy.MessageTTL
         nwInfo.prefetchSize = nwcProxy.PrefetchSize
 
         nwInfo.save()

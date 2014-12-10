@@ -16,6 +16,8 @@ class BrokerInfoService {
 
     def opInfo = new OperatingInfo()
 
+    log.info("getOperatingInfo(${b},${sampleTime}")
+
     jmxService.withConnection(b) { Broker broker, MBeanServerConnection connection ->
       try {
         log.info("retrieving operating info for broker ${broker.name} for time ${sampleTime}")
